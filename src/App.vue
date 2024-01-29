@@ -11,6 +11,9 @@ import NavigatorComp from './components/NavigatorComp.vue';
     <nav>
       <NavigatorComp></NavigatorComp>
     </nav>
+    <main>
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 
