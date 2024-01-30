@@ -5,11 +5,12 @@
                 <div class="w-100 align-self-center">
                     {{schemaQuery}}
                 </div>
-                <Button class="flex-shrink-1" :button-type="'btn-outline-secondary btn-sm'" :button-name="'copy'"></Button>
+                <Button class="flex-shrink-1" :button-type="'btn-outline-secondary btn-sm'" :button-name="'copy'"
+                        @click="copy(schemaQuery)"></Button>
             </div>
             <input class="form-control mb-2" type="text" placeholder="schema name..." aria-label="create schema label" 
                 v-model="schemaName">
-            <Button :button-name="'create'" @click="createForm()" :button-type="'btn-primary'"></Button>
+            <Button :button-name="'CREATE'" @click="createForm()" :button-type="'btn-primary'"></Button>
         </div>
     </div>
 </template>
@@ -17,10 +18,13 @@
 import { ref }  from "vue"
 import Button from '@/components/ButtonComp.vue';
 import axios from '@/api/axios'
+import { useClipboard } from '@vueuse/core'
 
 const schemaName = ref("")
 const schemaQuery = ref("")
 const isSchemaQuery = ref(false)
+
+const {copy} = useClipboard({ schemaQuery })
 
 const createForm = () => {
     axios.post('/schemas', {
