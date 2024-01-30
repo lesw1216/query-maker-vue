@@ -1,29 +1,36 @@
 <template lang="">
     <div>
         <div class="m-2 d-flex flex-column">
-            <div class="form-control mb-2 d-flex" v-if="isSchemaQuery">
-                <div class="w-100 align-self-center">
-                    {{schemaQuery}}
+            <SuccessAlrt :message="schemaQuery" :isSuccess="isSchemaQuery"></SuccessAlrt>
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-between mb-2">
+                    <div class="align-self-end">
+                        SchemaName:
+                    </div>
+                    <Button :button-name="'CREATE'" @click="createForm()" :button-type="'btn-primary'"></Button>
                 </div>
-                <Button class="flex-shrink-1" :button-type="'btn-outline-secondary btn-sm'" :button-name="'copy'"
-                        @click="copy(schemaQuery)"></Button>
+                <input class="form-control" type="text" placeholder="schema name..." aria-label="create schema label" 
+                    v-model="schemaName">
             </div>
-            <input class="form-control mb-2" type="text" placeholder="schema name..." aria-label="create schema label" 
-                v-model="schemaName">
-            <Button :button-name="'CREATE'" @click="createForm()" :button-type="'btn-primary'"></Button>
+            
         </div>
     </div>
 </template>
 <script setup>
 import { ref }  from "vue"
-import Button from '@/components/ButtonComp.vue';
-import axios from '@/api/axios'
 import { useClipboard } from '@vueuse/core'
 
+import axios from '@/api/axios'
+
+import SuccessAlrt from "@/components/SuccessAlrtComp.vue";
+import Button from '@/components/ButtonComp.vue';
+
+// ref
 const schemaName = ref("")
 const schemaQuery = ref("")
 const isSchemaQuery = ref(false)
 
+// vueUse
 const {copy} = useClipboard({ schemaQuery })
 
 const createForm = () => {
@@ -37,10 +44,6 @@ const createForm = () => {
             schemaQuery.value = response.data['data'];
             isSchemaQuery.value = true;
         }
-    // console.log(response.status);
-    // console.log(response.statusText);
-    // console.log(response.headers);
-    // console.log(response.config);
     });
 }
 </script>
