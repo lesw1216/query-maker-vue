@@ -7,6 +7,9 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/table">table create</router-link>
         </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/select">select</router-link>
+        </li>
       </ul>
     </div>
   </template>

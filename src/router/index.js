@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import SchemaView from '@/views/SchemaView.vue'
 import TableView from '@/views/TableView.vue'
+import SelectView from '@/views/SelectView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/table',
       name: 'table',
       component: TableView
+    },
+    {
+      path: '/select',
+      name: 'select',
+      component: SelectView
     }
   ]
 })
