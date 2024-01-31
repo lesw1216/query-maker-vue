@@ -2,17 +2,7 @@
     <div>
         <div class="m-2 d-flex flex-column">
             <SuccessAlrt :message="schemaQuery" :isSuccess="isSchemaQuery"></SuccessAlrt>
-            <div class="d-flex flex-column">
-                <div class="d-flex justify-content-between mb-2">
-                    <div class="align-self-end">
-                        SchemaName:
-                    </div>
-                    <Button :button-name="'CREATE'" @click="createForm()" :button-type="'btn-primary'"></Button>
-                </div>
-                <input class="form-control" type="text" placeholder="schema name..." aria-label="create schema label" 
-                    v-model="schemaName">
-            </div>
-            
+            <InputComp :input-label="'SchemaName'" @request-button="createForm"></InputComp>
         </div>
     </div>
 </template>
@@ -24,18 +14,18 @@ import axios from '@/api/axios'
 
 import SuccessAlrt from "@/components/SuccessAlrtComp.vue";
 import Button from '@/components/ButtonComp.vue';
+import InputComp from "@/components/InputComp.vue";
 
 // ref
-const schemaName = ref("")
 const schemaQuery = ref("")
 const isSchemaQuery = ref(false)
 
 // vueUse
 const {copy} = useClipboard({ schemaQuery })
 
-const createForm = () => {
+const createForm = (schemaNameProps) => {
     axios.post('/schemas', {
-        schemaName: schemaName.value
+        schemaName: schemaNameProps
     })
     .then(function (response) {
         console.log(response.data);

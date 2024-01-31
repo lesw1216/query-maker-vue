@@ -2,14 +2,7 @@
     <div class="h-100">
         <div class="d-flex flex-column m-2">
             <SuccessAlrtComp :message="tableCreateQuery.qeuryValue" :isSuccess="tableCreateQuery.isSuccess"></SuccessAlrtComp>
-            <div class="mb-2">
-                <div class="d-flex justify-content-between mb-2">
-                    <div class="align-self-end">Table Name:</div>
-                    <Button :button-name="'CREATE'" :button-type="'btn-primary'" @click="onclickCreateColumn"></Button>
-                </div>
-                 <input class="form-control" v-model="tableName" />
-                <hr>
-            </div>
+            <InputComp class="mb-2" :input-label="'Table Name'" @request-button='onclickCreateColumn'></InputComp>
             <table class="table table-hover">
                 <thead class="text-center sticky-top">
                     <tr>
@@ -61,6 +54,7 @@ import axios from '@/api/axios';
 
 import Button from '@/components/ButtonComp.vue'
 import SuccessAlrtComp from '@/components/SuccessAlrtComp.vue';
+import InputComp from '@/components/InputComp.vue';
 
 // ref
 const columnTypes = ref([])
@@ -93,9 +87,9 @@ const increaseRowCount = () => {
     })
 }
 
-const onclickCreateColumn = async () => {
-    await axios.post("/tables", {
-        tableName: tableName.value,
+const onclickCreateColumn = (tableNameProps) => {
+    axios.post("/tables", {
+        tableName: tableNameProps,
         columns: columns.value
     }).then(function(response) {
         console.log(response.data['data'])
@@ -103,8 +97,7 @@ const onclickCreateColumn = async () => {
         if (response.data['code'] == 200 && response.data['httpStatus'] == 'OK') {
             tableCreateQuery.qeuryValue=response.data['data']
             tableCreateQuery.isSuccess=true;
-        }
-        
+        }  
     })
 }
 
@@ -112,8 +105,8 @@ const onclickDeleteColumn = (index) => {
     columns.value.splice(index, 1)
 }
 
-onMounted(async () => {
-    await axios.get("/tables")
+onMounted(() => {
+    axios.get("/tables")
         .then(function (response) {
             columnTypes.value = response.data['data'];
             console.log(columnTypes.value.length)
