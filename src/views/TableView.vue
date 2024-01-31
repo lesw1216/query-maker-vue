@@ -109,7 +109,6 @@ onMounted(() => {
     axios.get("/tables")
         .then(function (response) {
             columnTypes.value = response.data['data'];
-            console.log(columnTypes.value.length)
         })
 });
 </script>
