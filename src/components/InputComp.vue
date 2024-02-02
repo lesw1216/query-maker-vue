@@ -6,7 +6,7 @@
             </div>
             <Button :button-name="'CREATE'" @click="$emit('requestButton', inputValue)" :button-type="'btn-primary'"></Button>
         </div>
-        <input class="form-control" :class="[inputClass, isValid ? 'border-danger' : '']" type="text" aria-label="input label" 
+        <input class="form-control" :class="[inputClass, isValid ? '' : 'border-danger']" type="text" aria-label="input label" 
                     v-model="inputValue">
     </div>
 </template>
