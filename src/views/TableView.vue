@@ -1,10 +1,10 @@
 <template lang="">
     <div class="h-100">
         <div class="d-flex flex-column m-2">
-            <InputComp class="mb-2" :input-label="'Table Name'" :is-valid="isValid(validErrorMessages.tableName)" @request-button='createForm'></InputComp>
+            <InputComp class="mb-2" :input-label="'Table Name'" :is-valid="isValid(responseError.tableName)" @request-button='createForm'></InputComp>
             <SuccessAlrtComp :message="responseSuccess.createdQuery" :isSuccess="responseSuccess.isSuccess"></SuccessAlrtComp>
-            <div class='alert alert-danger mt-2' v-if="!isValid(validErrorMessages.tableName)">
-                {{validErrorMessages.tableName}}
+            <div class='alert alert-danger mt-2' v-if="!isValid(responseError.tableName)">
+                {{responseError.tableName}}
             </div>
             <div class="d-flex justify-content-between flex-column">
                 <div class="d-flex justify-content-between">
@@ -39,18 +39,18 @@
                     <tr v-for="(column, index) in columns">
                         <td >
                             <input class="form-control" v-model="column.name" 
-                            :class="[isValid(validErrorMessages['columns['+index+'].name']) ? '':'border-danger']" />
+                            :class="[isValid(responseError['columns['+index+'].name']) ? '':'border-danger']" />
                         </td>
                         <td>        
                             <select class="form-select" aria-label="Default select example" v-model="column.type" 
-                            :class="[isValid(validErrorMessages['columns['+index+'].type']) ? '':'border-danger']">
+                            :class="[isValid(responseError['columns['+index+'].type']) ? '':'border-danger']">
                                 <option disabled selected>SELECT TYPE</option>
                                 <option v-for="columnType in columnTypes">{{columnType}}</option>
                             </select>
                         </td>
                         <td >        
                             <input class="form-control" v-model="column.size"
-                            :class="[isValid(validErrorMessages['columns['+index+'].size']) ? '':'border-danger']"/>
+                            :class="[isValid(responseError['columns['+index+'].size']) ? '':'border-danger']"/>
                         </td>
                         <td class="position-relative">
                             <input class="form-check-input position-absolute top-50 start-50 translate-middle" type="checkbox" 
@@ -103,14 +103,14 @@ const responseSuccess = reactive({
     createdQuery:null
 })
 
-const validErrorMessages = reactive({
+const responseError = reactive({
    
 })
 
 // function
 
 const createForm = (tableNameProps) => {
-    objectInit(validErrorMessages)
+    objectInit(responseError)
     objectInit(responseSuccess)
     isGlobalValid.value = false
 
@@ -118,16 +118,23 @@ const createForm = (tableNameProps) => {
         tableName: tableNameProps,
         columns: columns.value
     }).then(function(response) {
-        console.log(response.data['data'])
+        const code = response.data['code']
+        const httpStatus = response.data['httpStatus']
 
-        if (response.data['code'] == 200 && response.data['httpStatus'] == 'OK') {
+        if (code === 200 && httpStatus === 'OK') {
             responseSuccess.createdQuery=response.data['data']
             responseSuccess.isSuccess=true;
-        }  
+        }
+
     }).catch(function(error) {
-        console.log(validErrorMessages)
-        responseDataToField(error.response['data']['data'], validErrorMessages)
-        if (validErrorMessages.length == 1 && validErrorMessages.tableName === undefined) {
+        const res = error.response
+        const data = res['data']['data']
+
+        responseDataToField(data, responseError)
+        console.log(data)
+
+        const size = Object.keys(data).length
+        if(size == 1 && responseError.tableName !== undefined) {
             return
         }
 
@@ -155,7 +162,7 @@ const onclickDeleteColumn = (index) => {
 const onclickAllDeleteColumn = () => {
     columns.value.splice(1)
     columns.value[0] = new Column(null,null,null, false, false)
-    objectInit(validErrorMessages)
+    objectInit(responseError)
     isGlobalValid.value = false
 
 }
