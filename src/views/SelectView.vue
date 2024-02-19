@@ -77,6 +77,7 @@ const responseError = reactive({
 const requestDefualtSelect = (tableNameProps) => {
     initCondition()
     objectInit(responseError)
+    checkAsNameEmpty()
 
     axios.post("/selects", {
         tableName: tableNameProps,
@@ -108,6 +109,16 @@ const requestDefualtSelect = (tableNameProps) => {
 }
 
 // function
+const checkAsNameEmpty = () => {
+    for(let i = 0; i < columnNames.value.length; i++) {
+    
+        console.log(columnNames.value[i].asName)
+        if (columnNames.value[i].asName === '') {
+            columnNames.value[i].asName = null;
+        }
+    }
+}
+
 const initCondition = () => {
     isGlobalValid.value = false
     responseSuccess.isSuccess = false
