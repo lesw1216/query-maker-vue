@@ -25,7 +25,7 @@
             </div>
             
             <table class="table table-hover">
-                <thead class="text-center sticky-top">
+                <thead class="text-center">
                     <tr>
                         <th class="w-10" scope="col">name</th>
                         <th scope="col">type</th>
