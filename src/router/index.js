@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import SchemaView from '@/views/SchemaView.vue'
 import TableView from '@/views/TableView.vue'
 import SelectView from '@/views/SelectView.vue'
+import DdlCreateView from '@/views/ddl/DdlCreateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,18 +16,33 @@ const router = createRouter({
     //   component: () => import('../views/AboutView.vue')
     // }
     {
-      path: '/schema',
-      name: "schema",
-      component: SchemaView
+      path: '/ddl/creation',
+      name: 'DdlCreate',
+      component: DdlCreateView,
+      children: [
+        {
+          path: 'schema',
+          component: SchemaView
+        },
+        {
+          path: 'table',
+          component: TableView
+        }
+      ]
     },
+    // {
+    //   path: '/schema',
+    //   name: "schema",
+    //   component: SchemaView
+    // },
+    // {
+    //   path: '/table',
+    //   name: 'table',
+    //   component: TableView
+    // },
     {
-      path: '/table',
-      name: 'table',
-      component: TableView
-    },
-    {
-      path: '/select',
-      name: 'select',
+      path: '/dml/selection',
+      name: 'DmlSelect',
       component: SelectView
     }
   ]
