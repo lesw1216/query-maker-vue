@@ -4,16 +4,16 @@ import NavigatorComp from './components/NavigatorComp.vue';
 </script>
 
 <template>
-  <div>
-    <div class="flex h-screen">
-      <nav class="p-4 bg-indigo-600 w-56">
+  <div class="h-screen w-screen">
+    <div class="flex h-full w-full">
+      <nav class="bg-indigo-600 w-52 fixed h-full">
         <NavigatorComp></NavigatorComp>
       </nav>
-      <div class="border grow">
-        <header>
-          <h1>Query Maker</h1>
+      <div class="flex flex-col h-full w-[calc(100%-13rem)] absolute left-52">
+        <header class="text-5xl mx-2 sticky top-0 bg-white">
+          <h1>QUERY MAKER</h1>
         </header>
-        <main>
+        <main class="m-2 h-full top-16">
           <router-view></router-view>
         </main>
       </div>

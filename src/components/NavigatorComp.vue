@@ -1,6 +1,6 @@
 <template>
-    <div class="h-full text-xl text-slate-300 font-bold">
-      <ul class="h-full">
+    <div class="text-xl text-slate-300 font-bold">
+      <ul class="m-4">
         <li class="mb-2 flex flex-col">
           <div class="text-white text-2xl">
             DDL
@@ -33,7 +33,7 @@ import { ref } from 'vue';
 const route = useRoute()
 const router = useRouter()
 
-const routePath = ref()
+const routePath = ref("")
 
 const isDdlOver = ref(false)
 
@@ -42,13 +42,8 @@ router.afterEach(() => {
 })
 
 const isPath = (path) => {
-  return routePath.value == path
-}
-
-// events
-const handleDetailOver = () => {
-  isDdlOver.value = !isDdlOver.value;
-  console.log(isDdlOver.value)
+  const currentPath = routePath.value;
+  return currentPath.includes(path)
 }
 </script>
 <style lang="">
