@@ -5,15 +5,19 @@ import NavigatorComp from './components/NavigatorComp.vue';
 
 <template>
   <div>
-    <header>
-      <h1>Query Maker</h1>
-    </header>
-    <nav>
-      <NavigatorComp></NavigatorComp>
-    </nav>
-    <main>
-      <router-view></router-view>
-    </main>
+    <div class="flex h-screen">
+      <nav class="p-4 bg-indigo-600 w-56">
+        <NavigatorComp></NavigatorComp>
+      </nav>
+      <div class="border grow">
+        <header>
+          <h1>Query Maker</h1>
+        </header>
+        <main>
+          <router-view></router-view>
+        </main>
+      </div>
+    </div>
   </div>
 </template>
 
