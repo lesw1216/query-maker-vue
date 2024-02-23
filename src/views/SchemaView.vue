@@ -3,7 +3,7 @@
         <div class="m-2 d-flex flex-column">
             <InputComp class='mb-2' :input-label="'SchemaName'" :is-valid="isValid(responseError.schemaName)" @request-button="createForm"></InputComp>
             <SuccessAlrt :message="responseSuccess.createdQuery" :isSuccess="responseSuccess.isSuccess"></SuccessAlrt>
-            <div class='alert alert-danger' v-if="!isValid(responseError.schemaName)">
+            <div class='valid-error' v-if="!isValid(responseError.schemaName)">
                 {{responseError.schemaName}}
             </div>
         </div>

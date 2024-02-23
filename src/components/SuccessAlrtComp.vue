@@ -1,12 +1,12 @@
 <template lang="">
-    <div class="alert alert-secondary mb-2 d-flex" v-if="isSuccess">
-                <div class="w-100 align-self-center" id="queryResult">
-                    {{message}}
-                </div>
+    <div class="flex bg-green-200 p-2 items-center justify-between rounded-md" v-if="isSuccess">
+        <div class="" id="queryResult">
+            {{message}}
+        </div>
                 <!-- <Button class="flex-shrink-1" :button-type="'btn-outline-secondary btn-sm'" :button-name="'copy'"
                         @click="copy(message)"></Button> -->
-                <Button class="flex-shrink-1" :button-type="'btn-outline-secondary btn-sm'" :button-name="'copy'"
-                        @click="copyQuery"></Button>
+        <Button :button-type="'btn-default'" :button-name="'copy'"
+            @click="copyQuery"></Button>
     </div>
 </template>
 <script setup>

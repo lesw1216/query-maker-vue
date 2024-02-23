@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn-default {
+        @apply border-2 border-blue-100 bg-blue-500 text-white font-semibold p-2 rounded-md;
+    }
+
+    .btn-delete {
+        @apply border-red-100 bg-red-500 
+    }
+
+    .valid-error {
+        @apply text-red-500 text-lg
+    }
+}

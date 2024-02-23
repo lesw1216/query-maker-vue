@@ -1,12 +1,12 @@
 <template lang="">
-    <div class="d-flex flex-column">
-        <div class="d-flex justify-content-between mb-2">
-            <div class="align-self-end">
+    <div class="flex flex-col">
+        <div class="flex justify-between mb-1">
+            <div class="self-end">
                 {{inputLabel}}:
             </div>
-            <Button :button-name="'CREATE'" @click="$emit('requestButton', inputValue)" :button-type="'btn-primary'"></Button>
+            <Button :button-name="'CREATE'" @click="$emit('requestButton', inputValue)" :button-type="'btn-default'"></Button>
         </div>
-        <input class="form-control" :class="[inputClass, isValid ? '' : 'border-danger']" type="text" aria-label="input label" 
+        <input class="border-2 rounded-md focus:outline-none p-2 focus:border-blue-300" :class="[inputClass, isValid ? '' : 'border-red-600']" type="text" aria-label="input label" 
                     v-model="inputValue">
     </div>
 </template>
@@ -20,8 +20,8 @@ const props = defineProps({
 import { ref } from 'vue';
 
 import Button from './ButtonComp.vue';
-
 const inputValue = ref(undefined)
+
 
 </script>
 <style lang="">

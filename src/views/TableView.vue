@@ -1,72 +1,91 @@
 <template lang="">
     <div class="h-100">
-        <div class="d-flex flex-column m-2">
-            <InputComp class="mb-2" :input-label="'Table Name'" :is-valid="isValid(responseError.tableName)" @request-button='createForm'></InputComp>
-            <SuccessAlrtComp :message="responseSuccess.createdQuery" :isSuccess="responseSuccess.isSuccess"></SuccessAlrtComp>
-            <div class='alert alert-danger mt-2' v-if="!isValid(responseError.tableName)">
-                {{responseError.tableName}}
-            </div>
-            <div class="d-flex justify-content-between flex-column">
-                <div class="d-flex justify-content-between">
-                    <div class='align-self-center'>
-                        Columns
-                    </div>
-                    <div class="d-flex">
-                        <Button  :button-name="'Add'" class="me-2" :button-type="'btn-secondary'"
-                            @click="onClickIncreaseRowCount"></Button>
-                        <Button :button-name="'ALL DEL'" :button-type="'btn-danger'" @click="onclickAllDeleteColumn"></Button>
-                    </div>
-                </div>
-                <div>
-                    <div class='alert alert-danger mt-2' v-if="isGlobalValid">
-                        Must Input Fields, And Correct Type.
-                    </div>
+        <div class="m-2">
+            <div class="flex flex-col">
+                <InputComp class="mb-2" :input-label="'Table Name'" :is-valid="isValid(responseError.tableName)" @request-button='createForm'></InputComp>
+                <SuccessAlrtComp :message="responseSuccess.createdQuery" :isSuccess="responseSuccess.isSuccess"></SuccessAlrtComp>
+                <div class='text-lg text-red-500' v-if="!isValid(responseError.tableName)">
+                    {{responseError.tableName}}
                 </div>
             </div>
-            
-            <table class="table table-hover">
-                <thead class="text-center">
-                    <tr>
-                        <th class="w-10" scope="col">name</th>
-                        <th scope="col">type</th>
-                        <th scope="col">size</th>
-                        <th scope="col">primary key</th>
-                        <th scope="col">not null</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(column, index) in columns">
-                        <td >
-                            <input class="form-control" v-model="column.name" 
-                            :class="[isValid(responseError['columns['+index+'].name']) ? '':'border-danger']" />
-                        </td>
-                        <td>        
-                            <select class="form-select" aria-label="Default select example" v-model="column.type" 
-                            :class="[isValid(responseError['columns['+index+'].type']) ? '':'border-danger']">
-                                <option disabled selected>SELECT TYPE</option>
-                                <option v-for="columnType in columnTypes">{{columnType}}</option>
-                            </select>
-                        </td>
-                        <td >        
-                            <input class="form-control" v-model="column.size"
-                            :class="[isValid(responseError['columns['+index+'].size']) ? '':'border-danger']"/>
-                        </td>
-                        <td class="position-relative">
-                            <input class="form-check-input position-absolute top-50 start-50 translate-middle" type="checkbox" 
-                                v-model="column.primaryKey"/>
-                        </td>
-                        <td class="position-relative">
-                            <input class="form-check-input position-absolute top-50 start-50 translate-middle" type="checkbox"
-                                v-model="column.notNull" />
-                        </td>
-                        <td>
-                            <Button :button-name="'DEL'" :button-type="'btn-danger'" @click="onclickDeleteColumn(index)"></Button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            
+
+            <div class="text-nowrap">
+                <h2 class="text-xl">
+                    OPTIONS
+                </h2>
+                <div class="grid gap-2 grid-cols-5 text-center">
+                    <div class="flex flex-col gap-1">
+                        <h3 class="text-lg">
+                            primary key
+                        </h3>
+                        <input class="border-2 focus:outline-none focus:border-blue-500 p-1"/>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <h3 class="text-lg">
+                            foreign key
+                        </h3>
+                        <input class="border-2 focus:outline-none focus:border-blue-500 p-1"/>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <h3 class="text-lg">
+                            auto-increament
+                        </h3>
+                        <input class="border-2 focus:outline-none focus:border-blue-500 p-1"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <div class="flex flex-col mb-2 mt-2">
+                    <div class="flex justify-between">
+                        <div class='self-end text-xl'>
+                            Columns
+                        </div>
+                        <div class="flex">
+                            <Button :button-name="'Add'" :button-type="'btn-default'" class="me-2" 
+                                @click="onClickIncreaseRowCount"></Button>
+                            <Button :button-name="'ALL DEL'" :button-type="'btn-default btn-delete'" @click="onclickAllDeleteColumn"></Button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class='text-lg text-red-500' v-if="isGlobalValid">
+                            Must Input Fields, And Correct Type.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-5 text-lg text-center text-nowrap border-b-blue-500 border-b mb-2">
+                    <div class=''>name</div>
+                    <div class=''>type</div>
+                    <div class=''>size</div>
+                    <div class=''>not null</div>
+                    <div class=''></div>
+                </div>
+                <div class="grid grid-cols-5 items-center gap-2" v-for="(column, index) in columns">
+                    <div class="">
+                        <input class="w-full border-2 focus:outline-none p-1 focus:border-blue-500" v-model="column.name" 
+                        :class="[isValid(responseError['columns['+index+'].name']) ? '':'border-red-300']" />
+                    </div>
+                    <div class="">
+                        <select aria-label="Default select example" v-model="column.type" class="p-1 border-2 w-full focus:outline-none focus:border-blue-500"
+                                :class="[isValid(responseError['columns['+index+'].type']) ? '':'border-red-300']">
+                                    <option disabled selected>SELECT TYPE</option>
+                                    <option v-for="columnType in columnTypes">{{columnType}}</option>
+                        </select>
+                    </div>
+                    <div class="">
+                        <input v-model="column.size" class="border-2 p-1 w-full focus:outline-none focus:border-blue-500"
+                                :class="[isValid(responseError['columns['+index+'].size']) ? '':'border-red-300']"/>
+                    </div>
+                    <div class="text-center">
+                        <input class="mt-2 size-5" type="checkbox"
+                                    v-model="column.notNull" />
+                    </div>
+                    <div class="">
+                        <Button :button-name="'DELETE'" :button-type="'btn-default btn-delete w-full'" @click="onclickDeleteColumn(index)"></Button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
