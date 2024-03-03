@@ -28,7 +28,7 @@
                     </div>
                     <div class="flex flex-col gap-1">
                         <h3 class="text-lg">
-                            auto-increament
+                            auto-increment
                         </h3>
                         <input class="border-2 focus:outline-none focus:border-blue-500 p-1"/>
                     </div>
@@ -133,7 +133,7 @@ const createForm = (tableNameProps) => {
     objectInit(responseSuccess)
     isGlobalValid.value = false
 
-    axios.post("/tables", {
+    axios.post("/ddl/creation/table", {
         tableName: tableNameProps,
         columns: columns.value
     }).then(function(response) {
@@ -187,7 +187,7 @@ const onclickAllDeleteColumn = () => {
 }
 
 onMounted(() => {
-    axios.get("/tables")
+    axios.get("/ddl/creation/table/types")
         .then(function (response) {
             columnTypes.value = response.data['data'];
         })

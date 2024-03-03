@@ -41,7 +41,7 @@ const createForm = (schemaNameProps) => {
     objectInit(responseError)
     objectInit(responseSuccess)
 
-    axios.post('/schemas', {
+    axios.post('/ddl/creation/schema', {
         schemaName: schemaNameProps
     })
     .then(function (response) {

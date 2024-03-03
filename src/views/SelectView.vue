@@ -90,7 +90,7 @@ const requestDefualtSelect = (tableNameProps) => {
     objectInit(responseError)
     checkAsNameEmpty()
 
-    axios.post("/selects", {
+    axios.post("/dml/selects", {
         tableName: tableNameProps,
         columnNames: columnNames.value,
         allSelect: isAllSelect.value
